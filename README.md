@@ -28,7 +28,7 @@ Ez az alkalmazás egy bibliai verset jelenít meg, és (percben) meghatározott 
 
 5. **`log.json` fájl:** Ez a fájl a legutóbb megjelenített vers azonosítóját tárolja. Ez automatikusan létrejön, ha a szerver elindul először.
 
-## Szerver futtatása ⚙️
+## Szerver futtatása 🖧
 
 1. **Indítsd el a szervert:** A projekt könyvtárában futtasd a következő parancsot a terminálon/parancssoron:
 
@@ -42,7 +42,7 @@ Ez az alkalmazás egy bibliai verset jelenít meg, és (percben) meghatározott 
 
 Az alkalmazás a `index_2.0.html` fájlban beállított időközönként kér le egy új bibliai verset a szervertől. A szerver a `log.json` fájlban tárolja az utoljára megjelenített vers azonosítóját. Minden kéréskor a szerver növeli ezt az azonosítót, és a `data.json` fájlból kikeresi a következő verset. Ha a lista végére ér,  újrakezdi az elejétől. A szentiras.hu API-ját használja a vers szövegének lekéréséhez.  A frissítési időköz a HTML fájlban állítható be.
 
-## 🕒 Frissítési időköz beállítása
+## Frissítési időköz beállítása🕒
 
 **A frissítési időköz a `index_2.0.html` fájlban, a  `refreshIntervalMinutes` változóban állítható be (percben megadva).**
 
@@ -50,7 +50,7 @@ Az alkalmazás a `index_2.0.html` fájlban beállított időközönként kér le
 const refreshIntervalMinutes = 1; // Itt állíthatod be a frissítési időközt percben (pl. 2 órához: 120)
 ```
 
-## ⚙️ Fordítás módosítása
+## Fordítás módosítása ⚙️
 
 A script alapértelmezésben a SZIT fordítást használja. Ha másik fordítást szeretnél használni, módosítsd a `getVerse` függvényben a `translation` paraméter értékét az `app.js` fájlban:
 
@@ -61,7 +61,7 @@ async function getVerse(reference, translation = 'SZIT') // <- Itt módosíthato
 }
 ```
 
-## ❗❗❗ Fontos
+## Fontos ❗❗❗
 
 Mivel a program a konkrét szentírási részt nyeri ki a szentiras.hu-ból, ezért vesszőhibák, idézőjelhibák és félbehagyott mondatok keletkezhetnek:
 
