@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliai Versek</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex; 
+            background-repeat: no-repeat;
+            background-image: url('landscape_sunset.jpg'); 
+            background-size: cover;
+            font-family: 'Times New Roman', serif;
+        }
+
+        #verse-container {
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); 
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            max-width: 90%;
+            width: 1600px; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+        }
+
+        #verse-title {
+            font-size: 72px; 
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #verse-text {
+            font-size: 48px; 
+            margin-bottom: 30px;
+            white-space: pre-line;
+            text-align: justify; 
+            line-height: 1.6em; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+        }
+
+        #verse-reference, #verse-translation {
+            font-style: italic;
+            color: #666;
+            font-size: 18px; 
+        }
+
+        #error-message {
+            color: darkred;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="verse-container">
+        <div id="verse-title"></div>
+        <div id="verse-text"></div>
+        <div id="verse-reference"></div>
+        <div id="verse-translation"></div>
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        const refreshIntervalMinutes = 1; // Itt állíthatod be a frissítési időközt percben (pl. 2 órához: 120)
+        const refreshIntervalMs = refreshIntervalMinutes * 60 * 1000;
+
+        function fetchVerse() {
+            fetch('http://localhost:5000/verse') // vagy a szerver címe
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('error-message').textContent = data.error;
+                        document.getElementById('verse-title').textContent = '';
+                        document.getElementById('verse-text').textContent = '';
+                        document.getElementById('verse-reference').textContent = '';
+                        document.getElementById('verse-translation').textContent = '';
+                    } else {
+                        document.getElementById('verse-title').textContent = data.title;
+                        document.getElementById('verse-text').textContent = data.text;
+                        document.getElementById('verse-reference').textContent = data.reference;
+                        document.getElementById('verse-translation').textContent = data.translation;
+                        document.getElementById('error-message').textContent = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('error-message').textContent = 'Hiba történt a vers lekérése közben.';
+                });
+        }
+
+        fetchVerse();
+        setInterval(fetchVerse, refreshIntervalMs);
+    </script>
+</body>
+</html>
