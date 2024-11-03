@@ -1,6 +1,6 @@
 # Bibliai Vers Megjelenítő
 
-Ez az alkalmazás egy bibliai verset jelenít meg, és meghatározott időközönként automatikusan frissül. A megjelenített vers a `data.json` fájlban található hivatkozásokból kerül kiválasztásra, és a szentiras.hu API-ját használja a vers szövegének lekéréséhez.
+Ez az alkalmazás egy bibliai verset jelenít meg, és (percben) meghatározott időközönként automatikusan frissül. A megjelenített vers a `data.json` fájlban található hivatkozásokból kerül kiválasztásra, és a szentiras.hu API-ját használja a vers szövegének lekéréséhez.
 
 ## Előkészületek 🚀
 
@@ -42,6 +42,14 @@ Ez az alkalmazás egy bibliai verset jelenít meg, és meghatározott időközö
 
 Az alkalmazás a `index_2.0.html` fájlban beállított időközönként kér le egy új bibliai verset a szervertől. A szerver a `log.json` fájlban tárolja az utoljára megjelenített vers azonosítóját. Minden kéréskor a szerver növeli ezt az azonosítót, és a `data.json` fájlból kikeresi a következő verset. Ha a lista végére ér,  újrakezdi az elejétől. A szentiras.hu API-ját használja a vers szövegének lekéréséhez.  A frissítési időköz a HTML fájlban állítható be.
 
+## 🕒 Frissítési időköz beállítása
+
+**A frissítési időköz a `index_2.0.html` fájlban, a  `refreshIntervalMinutes` változóban állítható be (percben megadva).**
+
+```javascript
+const refreshIntervalMinutes = 1; // Itt állíthatod be a frissítési időközt percben (pl. 2 órához: 120)
+```
+
 ## ⚙️ Fordítás módosítása
 
 A script alapértelmezésben a SZIT fordítást használja. Ha másik fordítást szeretnél használni, módosítsd a `getVerse` függvényben a `translation` paraméter értékét az `app.js` fájlban:
@@ -52,6 +60,19 @@ async function getVerse(reference, translation = 'SZIT') // <- Itt módosíthato
     // ...
 }
 ```
+
+## ❗❗❗ Fontos
+
+Mivel a program a konkrét szentírási részt nyeri ki a szentiras.hu-ból, ezért vesszőhibák, idézőjelhibák és félbehagyott mondatok keletkezhetnek:
+
+Például: Józsue könyve: [Józsue könyve: 1. fejezet](https://szentiras.hu/SZIT/J%C3%B3zs1) ➡️ [9-es rész](https://szentiras.hu/SZIT/J%C3%B3zs1,9)
+
+Hát nem azt a parancsot adtam neked, `9` hogy légy...
+
+Mivel az 1. fejezet `9` része itt kezdődik, ezért így fog kinézni:
+
+_hogy légy erős és kitartó? Ne félj és ne aggódj tehát, mert az Úr, a te Istened veled lesz mindenütt, ahova csak mész.”_
+
 
 ## Lehetséges hibák és megoldásaik ⚠️
 
